@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="profile-container">
+    <h2>{{ profile.user.username }}'s Profile</h2>
+    {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" alt="Avatar" style="width:100px;height:100px;border-radius:50%;">
+    {% endif %}
+    <p><strong>Bio:</strong> {{ profile.bio }}</p>
+    <h3>Posts</h3>
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.content }} <small>({{ post.created_at }})</small></li>
+        {% empty %}
+            <li>No posts yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

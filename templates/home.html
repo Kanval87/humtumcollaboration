@@ -16,20 +16,45 @@
             margin: 2rem 0;
         }
         .diagram svg {
-            width: 400px;
-            height: 200px;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
         }
-        .features { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; }
-        .feature { background: #f5f6fa; border-radius: 6px; padding: 1rem 2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05); text-align: center; }
+        .features { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+        .feature { background: #f5f6fa; border-radius: 6px; padding: 1rem 2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05); text-align: center; flex: 1 1 200px; min-width: 180px; margin-bottom: 1rem; }
         .feature h3 { margin-top: 0; }
+        form { margin-top: 1rem; }
+        form input, form button { padding: 0.5rem; font-size: 1rem; }
+        form button { background: #4267B2; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        form button:hover { background: #365899; }
+        ul { padding-left: 1.5rem; }
+        li { margin-bottom: 1rem; }
+        @media (max-width: 600px) {
+            .navbar { padding: 1rem; }
+            .navbar h1 { font-size: 1.3rem; }
+            .container { padding: 1rem; margin: 1rem; }
+            .welcome { font-size: 1.1rem; }
+            .features { flex-direction: column; gap: 1rem; }
+            .feature { padding: 1rem; min-width: unset; }
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <h1>HumTum Social</h1>
+        <h1>Home HumTum Social</h1>
+                <div style="margin-left:auto;">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' user.username %}" style="color:#fff; margin-right:1rem;">Profile</a>
+                <a href="{% url 'logout' %}" style="color:#fff;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="color:#fff; margin-right:1rem;">Login</a>
+                <a href="{% url 'signup' %}" style="color:#fff;">Sign Up</a>
+            {% endif %}
+        </div>
     </div>
     <div class="container">
-        <div class="welcome">Welcome to your social network! Connect, share, and interact with friends.</div>
+        {% block content %}
+        <div class="welcome">Home Welcome to your social network! Connect, share, and interact with friends.</div>
         <div class="diagram">
             <!-- Simple SVG diagram for 3-layer architecture -->
             <svg viewBox="0 0 400 200">
@@ -55,6 +80,25 @@
                 <p>Find and connect with friends, send messages, and more.</p>
             </div>
         </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Post</button>
+        </form>
+        <h3>Recent Posts</h3>
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>:</strong>
+                    {{ post.content }}
+                    {% if post.image %}<br><img src="{{ post.image.url }}" style="max-width:200px;max-height:200px;"/>{% endif %}
+                    <small>({{ post.created_at }})</small>
+                </li>
+            {% empty %}
+                <li>No posts yet.</li>
+            {% endfor %}
+        </ul>
+        {% endblock %}
     </div>
 </body>
 </html>
