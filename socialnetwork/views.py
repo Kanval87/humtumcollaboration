@@ -33,7 +33,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-@login_required
+# @login_required
 def home(request):
     posts = Post.objects.all().order_by('-created_at')
     if request.method == 'POST':
