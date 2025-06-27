@@ -57,7 +57,7 @@
         <div class="welcome">Home Welcome to your social network! Connect, share, and interact with friends.</div>
        
         {% if user.is_authenticated %}
-        <form method="post" enctype="multipart/form-data"></form>
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Post</button>
