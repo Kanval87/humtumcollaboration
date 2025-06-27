@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HumTum Social</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; }
+        .navbar { background: #4267B2; color: #fff; padding: 1rem 2rem; display: flex; align-items: center; }
+        .navbar h1 { margin: 0; font-size: 2rem; }
+        .container { max-width: 900px; margin: 2rem auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 2rem; }
+        .auth-container, .profile-container { max-width: 400px; margin: 2rem auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 2rem; }
+        form { display: flex; flex-direction: column; gap: 1rem; }
+        input, button { padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc; }
+        button { background: #4267B2; color: #fff; border: none; cursor: pointer; }
+        button:hover { background: #365899; }
+        a { color: #4267B2; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media (max-width: 600px) {
+            .navbar { padding: 1rem; }
+            .navbar h1 { font-size: 1.3rem; }
+            .container, .auth-container, .profile-container { padding: 1rem; margin: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1><a href="/" style="color:#fff;text-decoration:none;">Base HumTum Social</a></h1>
+        <div style="margin-left:auto;">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' user.username %}" style="color:#fff; margin-right:1rem;">Profile</a>
+                <a href="{% url 'logout' %}" style="color:#fff;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="color:#fff; margin-right:1rem;">Login</a>
+                <a href="{% url 'signup' %}" style="color:#fff;">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
