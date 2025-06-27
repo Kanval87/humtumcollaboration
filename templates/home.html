@@ -55,36 +55,14 @@
     <div class="container">
         {% block content %}
         <div class="welcome">Home Welcome to your social network! Connect, share, and interact with friends.</div>
-        <div class="diagram">
-            <!-- Simple SVG diagram for 3-layer architecture -->
-            <svg viewBox="0 0 400 200">
-                <rect x="50" y="30" width="300" height="40" fill="#4267B2" rx="8"/>
-                <text x="200" y="55" text-anchor="middle" fill="#fff" font-size="18">Presentation Layer (UI)</text>
-                <rect x="50" y="90" width="300" height="40" fill="#00b894" rx="8"/>
-                <text x="200" y="115" text-anchor="middle" fill="#fff" font-size="18">Application Layer (Logic)</text>
-                <rect x="50" y="150" width="300" height="40" fill="#fdcb6e" rx="8"/>
-                <text x="200" y="175" text-anchor="middle" fill="#2d3436" font-size="18">Data Layer (Database)</text>
-            </svg>
-        </div>
-        <div class="features">
-            <div class="feature">
-                <h3>Profile</h3>
-                <p>Manage your profile, photo, and bio.</p>
-            </div>
-            <div class="feature">
-                <h3>Posts</h3>
-                <p>Share updates, images, and thoughts with your network.</p>
-            </div>
-            <div class="feature">
-                <h3>Connect</h3>
-                <p>Find and connect with friends, send messages, and more.</p>
-            </div>
-        </div>
-        <form method="post" enctype="multipart/form-data">
+       
+        {% if user.is_authenticated %}
+        <form method="post" enctype="multipart/form-data"></form>
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Post</button>
         </form>
+        {% endif %}
         <h3>Recent Posts</h3>
         <ul>
             {% for post in posts %}
@@ -102,3 +80,4 @@
     </div>
 </body>
 </html>
+
