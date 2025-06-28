@@ -11,4 +11,8 @@ class SignUpForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['content', 'image']
+        fields = [
+            'image',
+            'seeking_partner', 'project_title', 'project_description',
+            'skills_needed', 'preferred_partner_details'
+        ]

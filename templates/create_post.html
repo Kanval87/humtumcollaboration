@@ -3,7 +3,13 @@
 <h2>Create a New Post</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.non_field_errors }}
+    <div>{{ form.seeking_partner.label_tag }} {{ form.seeking_partner }}</div>
+    <div>{{ form.project_title.label_tag }} {{ form.project_title }}</div>
+    <div>{{ form.project_description.label_tag }} {{ form.project_description }}</div>
+    <div>{{ form.skills_needed.label_tag }} {{ form.skills_needed }}</div>
+    <div>{{ form.preferred_partner_details.label_tag }} {{ form.preferred_partner_details }}</div>
+    <div>{{ form.image.label_tag }} {{ form.image }}</div>
     <button type="submit">Submit Post</button>
 </form>
 <a href="{% url 'home' %}" style="display:inline-block;margin-top:1rem;">&larr; Back to Home</a>

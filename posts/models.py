@@ -11,9 +11,14 @@ class Profile(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    # New fields for group project partner seeking
+    seeking_partner = models.BooleanField(default=False)
+    project_title = models.CharField(max_length=100, blank=True)
+    project_description = models.TextField(blank=True)
+    skills_needed = models.CharField(max_length=200, blank=True)
+    preferred_partner_details = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to='posts/', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.author.username}: {self.content[:30]}"
+        return f"{self.author.username}: {self.project_title[:30]}"

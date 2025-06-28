@@ -65,10 +65,40 @@
         <ul>
             {% for post in posts %}
                 <li>
-                    <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>:</strong>
+                    <!-- <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>:</strong>
                     {{ post.content }}
                     {% if post.image %}<br><img src="{{ post.image.url }}" style="max-width:200px;max-height:200px;"/>{% endif %}
-                    <small>({{ post.created_at }})</small>
+                    <small>({{ post.created_at }})</small> -->
+                    <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                        <div style="flex-shrink:0;">
+                            <img src="{% if post.author.profile.avatar %}{{ post.author.profile.avatar.url }}{% else %}https://ui-avatars.com/api/?name={{ post.author.username }}{% endif %}" alt="Avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #4267B2;">
+                        </div>
+                        <div style="flex:1;">
+                            <div style="display:flex;align-items:center;gap:0.5rem;">
+                                <strong>
+                                    <a href="{% url 'profile' post.author.username %}" style="color:#4267B2;text-decoration:none;">
+                                        {{ post.author.username }}
+                                    </a>
+                                </strong>
+                                <span style="color:#888;font-size:0.95em;">
+                                    • {{ post.created_at|date:"M d, Y H:i" }}
+                                </span>
+                            </div>
+                            <div style="margin:0.5rem 0 0.5rem 0; font-size:1.1em;">
+                                {{ post.project_title|linebreaksbr }}
+                            </div>
+                            {% if post.image %}
+                                <div style="margin:0.5rem 0;">
+                                    <img src="{{ post.image.url }}" alt="Post image" style="max-width:220px;max-height:220px;border-radius:8px;box-shadow:0 1px 6px rgba(66,103,178,0.08);">
+                                </div>
+                            {% endif %}
+                            <div style="margin-top:0.5rem;">
+                                <span style="color:#4267B2;font-weight:500;">&#x1F44D; {{ post.likes.count }}</span>
+                                <span style="margin-left:1.5rem;color:#888;">&#x1F4AC; {{ post.comments.count }} comments</span>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </li>
             {% empty %}
                 <li>No posts yet.</li>
