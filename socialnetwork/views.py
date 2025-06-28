@@ -63,3 +63,17 @@ def profile_view(request, username):
     profile = user.profile
     posts = Post.objects.filter(author=user).order_by("-created_at")
     return render(request, "profile.html", {"profile": profile, "posts": posts})
+
+
+@login_required
+def create_post_view(request):
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect("home")
+    else:
+        form = PostForm()
+    return render(request, "create_post.html", {"form": form})

@@ -57,11 +57,9 @@
         <div class="welcome">Home Welcome to your social network! Connect, share, and interact with friends.</div>
        
         {% if user.is_authenticated %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Post</button>
-        </form>
+        <div style="margin-bottom:1.5rem;">
+            <a href="{% url 'create_post' %}" style="background:#4267B2;color:#fff;padding:0.5rem 1rem;border-radius:4px;text-decoration:none;">Create a Post</a>
+        </div>
         {% endif %}
         <h3>Recent Posts</h3>
         <ul>
