@@ -20,6 +20,10 @@
             max-width: 400px;
             height: auto;
         }
+        .li a:hover {
+            background-color: #f9f9f9;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
         .features { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
         .feature { background: #f5f6fa; border-radius: 6px; padding: 1rem 2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05); text-align: center; flex: 1 1 200px; min-width: 180px; margin-bottom: 1rem; }
         .feature h3 { margin-top: 0; }
@@ -65,40 +69,37 @@
         <ul>
             {% for post in posts %}
                 <li>
-                    <!-- <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>:</strong>
-                    {{ post.content }}
-                    {% if post.image %}<br><img src="{{ post.image.url }}" style="max-width:200px;max-height:200px;"/>{% endif %}
-                    <small>({{ post.created_at }})</small> -->
-                    <div style="display: flex; align-items: flex-start; gap: 1rem;">
-                        <div style="flex-shrink:0;">
-                            <img src="{% if post.author.profile.avatar %}{{ post.author.profile.avatar.url }}{% else %}https://ui-avatars.com/api/?name={{ post.author.username }}{% endif %}" alt="Avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #4267B2;">
-                        </div>
-                        <div style="flex:1;">
-                            <div style="display:flex;align-items:center;gap:0.5rem;">
-                                <strong>
-                                    <a href="{% url 'profile' post.author.username %}" style="color:#4267B2;text-decoration:none;">
-                                        {{ post.author.username }}
-                                    </a>
-                                </strong>
-                                <span style="color:#888;font-size:0.95em;">
-                                    • {{ post.created_at|date:"M d, Y H:i" }}
-                                </span>
+                    <a href="{% url 'post_detail' post.id %}" style="text-decoration:none;color:inherit;display:block;width:100%;">
+                        <div style="display: flex; align-items: flex-start; gap: 1rem; cursor:pointer;">
+                            <div style="flex-shrink:0;">
+                                <img src="{% if post.author.profile.avatar %}{{ post.author.profile.avatar.url }}{% else %}https://ui-avatars.com/api/?name={{ post.author.username }}{% endif %}" alt="Avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #4267B2;">
                             </div>
-                            <div style="margin:0.5rem 0 0.5rem 0; font-size:1.1em;">
-                                {{ post.project_title|linebreaksbr }}
-                            </div>
-                            {% if post.image %}
-                                <div style="margin:0.5rem 0;">
-                                    <img src="{{ post.image.url }}" alt="Post image" style="max-width:220px;max-height:220px;border-radius:8px;box-shadow:0 1px 6px rgba(66,103,178,0.08);">
+                            <div style="flex:1;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <strong>
+                                        <a href="{% url 'profile' post.author.username %}" style="color:#4267B2;text-decoration:none;" onclick="event.stopPropagation();">
+                                            {{ post.author.username }}
+                                        </a>
+                                    </strong>
+                                    <span style="color:#888;font-size:0.95em;">
+                                        • {{ post.created_at|date:"M d, Y H:i" }}
+                                    </span>
                                 </div>
-                            {% endif %}
-                            <div style="margin-top:0.5rem;">
-                                <span style="color:#4267B2;font-weight:500;">&#x1F44D; {{ post.likes.count }}</span>
-                                <span style="margin-left:1.5rem;color:#888;">&#x1F4AC; {{ post.comments.count }} comments</span>
+                                <div style="margin:0.5rem 0 0.5rem 0; font-size:1.1em;">
+                                    {{ post.project_title|linebreaksbr }}
+                                </div>
+                                {% if post.image %}
+                                    <div style="margin:0.5rem 0;">
+                                        <img src="{{ post.image.url }}" alt="Post image" style="max-width:220px;max-height:220px;border-radius:8px;box-shadow:0 1px 6px rgba(66,103,178,0.08);">
+                                    </div>
+                                {% endif %}
+                                <div style="margin-top:0.5rem;">
+                                    <span style="color:#4267B2;font-weight:500;">&#x1F44D; {{ post.likes.count }}</span>
+                                    <span style="margin-left:1.5rem;color:#888;">&#x1F4AC; {{ post.comments.count }} comments</span>
+                                </div>
                             </div>
-                            
                         </div>
-                    </div>
+                    </a>
                 </li>
             {% empty %}
                 <li>No posts yet.</li>

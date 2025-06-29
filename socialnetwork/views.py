@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -77,3 +77,9 @@ def create_post_view(request):
     else:
         form = PostForm()
     return render(request, "create_post.html", {"form": form})
+
+
+# @login_required
+def post_detail_view(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    return render(request, "post_detail.html", {"post": post})

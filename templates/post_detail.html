@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ post.project_title|default:"Post Details" }}</h2>
+<div style="display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
+    <div style="flex-shrink:0;">
+        <img src="{% if post.author.profile.avatar %}{{ post.author.profile.avatar.url }}{% else %}https://ui-avatars.com/api/?name={{ post.author.username }}{% endif %}" alt="Avatar" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #4267B2;">
+        <div style="margin-top:0.5rem;font-weight:bold;">{{ post.author.username }}</div>
+        <div style="color:#888;font-size:0.95em;">{{ post.created_at|date:"M d, Y H:i" }}</div>
+    </div>
+    <div style="flex:1;min-width:220px;">
+        <div style="margin-bottom:1rem;">
+            <strong>Content:</strong><br>
+            {{ post.content|linebreaksbr }}
+        </div>
+        {% if post.image %}
+        <div style="margin-bottom:1rem;">
+            <img src="{{ post.image.url }}" alt="Post image" style="max-width:320px;max-height:320px;border-radius:8px;box-shadow:0 1px 6px rgba(66,103,178,0.08);">
+        </div>
+        {% endif %}
+        {% if post.seeking_partner %}
+        <div style="margin-bottom:1rem;">
+            <strong>Seeking Partner for Group Project</strong>
+            <ul>
+                <li><strong>Project Title:</strong> {{ post.project_title }}</li>
+                <li><strong>Description:</strong> {{ post.project_description|linebreaksbr }}</li>
+                <li><strong>Skills Needed:</strong> {{ post.skills_needed }}</li>
+                <li><strong>Preferred Partner Details:</strong> {{ post.preferred_partner_details }}</li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<a href="{% url 'home' %}" style="display:inline-block;margin-top:1.5rem;">&larr; Back to Home</a>
+{% endblock %}
