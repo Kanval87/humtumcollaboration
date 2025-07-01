@@ -1,0 +1,131 @@
+<a href="{% url 'post_detail' post.id %}" class="post-item-link">
+    <div class="post-item-card"
+        style="flex-direction: column; align-items: stretch; background: rgba(128,128,128,0.1);">
+
+        <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 1.2rem; width: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.7rem;">
+                <div class="post-item-avatar" style="align-self: flex-start;">
+                    <img src="{% if post.author.profile.avatar %}{{ post.author.profile.avatar.url }}{% else %}https://ui-avatars.com/api/?name={{ post.author.username }}{% endif %}"
+                        alt="Avatar">
+                </div>
+                <span class="post-item-date" style="align-self: flex-start; display: flex; flex-direction: column;">
+                    <span style="font-size: 1.10em;">
+                        {{ post.created_at|date:"g:i a" }}
+                    </span>
+                    <span style="font-size: 0.85em;">
+                        {{ post.created_at|date:"M d, Y" }}
+                    </span>
+                </span>
+
+            </div>
+            <div class="post-item-title" style="flex: 1;">
+                <strong>{{ post.project_title|linebreaksbr }}</strong>
+            </div>
+        </div>
+
+        {% if post.image %}
+        <div class="post-item-image">
+            <img src="{{ post.image.url }}" alt="Post image">
+        </div>
+        {% endif %}
+        <hr style="border: none; border-top: 1px solid #c5c5c5; margin: 1rem 0;">
+        <div class="post-item-footer">
+            <span class="post-item-likes">&#x1F44D; {{ post.likes.count }}</span>
+            <span class="post-item-comments">&#x1F4AC; {{ post.comments.count }} comments</span>
+        </div>
+    </div>
+</a>
+<style>
+    .post-item-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .post-item-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        cursor: pointer;
+        color: #222;
+        background: #f8faff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(66, 103, 178, 0.07);
+        padding: 1.2rem 1.5rem;
+        transition: box-shadow 0.2s, background 0.2s;
+    }
+
+    .post-item-card:hover {
+        background: #eaf0fb;
+        box-shadow: 0 4px 16px rgba(66, 103, 178, 0.13);
+    }
+
+    .post-item-avatar img {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #4267B2;
+        background: #fff;
+    }
+
+    .post-item-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .post-item-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .post-item-username {
+        color: #4267B2;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.08em;
+    }
+
+    .post-item-username:hover {
+        text-decoration: underline;
+    }
+
+    .post-item-date {
+        color: #888;
+        font-size: 0.97em;
+    }
+
+    .post-item-title {
+        margin: 0.5rem 0 0.5rem 0;
+        font-size: 1.13em;
+        font-weight: 500;
+        color: #222;
+        word-break: break-word;
+    }
+
+    .post-item-image img {
+        max-width: 220px;
+        max-height: 220px;
+        border-radius: 8px;
+        box-shadow: 0 1px 6px rgba(66, 103, 178, 0.08);
+        margin: 0.5rem 0;
+    }
+
+    .post-item-footer {
+        margin-top: 0.5rem;
+        display: flex;
+        gap: 1.5rem;
+        color: #4267B2;
+        font-weight: 500;
+        font-size: 1em;
+    }
+
+    .post-item-comments {
+        color: #888;
+        font-weight: 400;
+    }
+</style>

@@ -1,112 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network - Home</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; }
-        .navbar { background: #4267B2; color: #fff; padding: 1rem 2rem; display: flex; align-items: center; }
-        .navbar h1 { margin: 0; font-size: 2rem; }
-        .container { max-width: 900px; margin: 2rem auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 2rem; }
-        .welcome { font-size: 1.5rem; margin-bottom: 1rem; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+        }
+
+        .navbar {
+            background: #4267B2;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .welcome {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
         .diagram {
             display: flex;
             justify-content: center;
             margin: 2rem 0;
         }
+
         .diagram svg {
             width: 100%;
             max-width: 400px;
             height: auto;
         }
-        .li a:hover {
-            background-color: #f9f9f9;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+        .features {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
-        .features { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
-        .feature { background: #f5f6fa; border-radius: 6px; padding: 1rem 2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05); text-align: center; flex: 1 1 200px; min-width: 180px; margin-bottom: 1rem; }
-        .feature h3 { margin-top: 0; }
-        form { margin-top: 1rem; }
-        form input, form button { padding: 0.5rem; font-size: 1rem; }
-        form button { background: #4267B2; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-        form button:hover { background: #365899; }
-        ul { padding-left: 1.5rem; }
-        li { margin-bottom: 1rem; }
+
+        .feature {
+            background: #f5f6fa;
+            border-radius: 6px;
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            flex: 1 1 200px;
+            min-width: 180px;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            margin-top: 0;
+        }
+
+        form {
+            margin-top: 1rem;
+        }
+
+        form input,
+        form button {
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+
+        form button {
+            background: #4267B2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #365899;
+        }
+
+        ul {
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 600px) {
-            .navbar { padding: 1rem; }
-            .navbar h1 { font-size: 1.3rem; }
-            .container { padding: 1rem; margin: 1rem; }
-            .welcome { font-size: 1.1rem; }
-            .features { flex-direction: column; gap: 1rem; }
-            .feature { padding: 1rem; min-width: unset; }
+            .navbar {
+                padding: 1rem;
+            }
+
+            .navbar h1 {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            .welcome {
+                font-size: 1.1rem;
+            }
+
+            .features {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .feature {
+                padding: 1rem;
+                min-width: unset;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="navbar">
         <h1>Home HumTum Social</h1>
-                <div style="margin-left:auto;">
+        <div style="margin-left:auto;">
             {% if user.is_authenticated %}
-                <a href="{% url 'profile' user.username %}" style="color:#fff; margin-right:1rem;">Profile</a>
-                <a href="{% url 'logout' %}" style="color:#fff;">Logout</a>
+            <a href="{% url 'profile' user.username %}" style="color:#fff; margin-right:1rem;">Profile</a>
+            <a href="{% url 'logout' %}" style="color:#fff;">Logout</a>
             {% else %}
-                <a href="{% url 'login' %}" style="color:#fff; margin-right:1rem;">Login</a>
-                <a href="{% url 'signup' %}" style="color:#fff;">Sign Up</a>
+            <a href="{% url 'login' %}" style="color:#fff; margin-right:1rem;">Login</a>
+            <a href="{% url 'signup' %}" style="color:#fff;">Sign Up</a>
             {% endif %}
         </div>
     </div>
     <div class="container">
         {% block content %}
         <div class="welcome">Home Welcome to your social network! Connect, share, and interact with friends.</div>
-       
+
         {% if user.is_authenticated %}
         <div style="margin-bottom:1.5rem;">
-            <a href="{% url 'create_post' %}" style="background:#4267B2;color:#fff;padding:0.5rem 1rem;border-radius:4px;text-decoration:none;">Create a Post</a>
+            <a href="{% url 'create_post' %}"
+                style="background:#4267B2;color:#fff;padding:0.5rem 1rem;border-radius:4px;text-decoration:none;">Create
+                a Post</a>
         </div>
         {% endif %}
         <h3>Recent Posts</h3>
-        <ul>
-            {% for post in posts %}
-                <li>
-                    <a href="{% url 'post_detail' post.id %}" style="text-decoration:none;color:inherit;display:block;width:100%;">
-                        <div style="display: flex; align-items: flex-start; gap: 1rem; cursor:pointer;">
-                            <div style="flex-shrink:0;">
-                                <img src="{% if post.author.profile.avatar %}{{ post.author.profile.avatar.url }}{% else %}https://ui-avatars.com/api/?name={{ post.author.username }}{% endif %}" alt="Avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #4267B2;">
-                            </div>
-                            <div style="flex:1;">
-                                <div style="display:flex;align-items:center;gap:0.5rem;">
-                                    <strong>
-                                        <a href="{% url 'profile' post.author.username %}" style="color:#4267B2;text-decoration:none;" onclick="event.stopPropagation();">
-                                            {{ post.author.username }}
-                                        </a>
-                                    </strong>
-                                    <span style="color:#888;font-size:0.95em;">
-                                        • {{ post.created_at|date:"M d, Y H:i" }}
-                                    </span>
-                                </div>
-                                <div style="margin:0.5rem 0 0.5rem 0; font-size:1.1em;">
-                                    {{ post.project_title|linebreaksbr }}
-                                </div>
-                                {% if post.image %}
-                                    <div style="margin:0.5rem 0;">
-                                        <img src="{{ post.image.url }}" alt="Post image" style="max-width:220px;max-height:220px;border-radius:8px;box-shadow:0 1px 6px rgba(66,103,178,0.08);">
-                                    </div>
-                                {% endif %}
-                                <div style="margin-top:0.5rem;">
-                                    <span style="color:#4267B2;font-weight:500;">&#x1F44D; {{ post.likes.count }}</span>
-                                    <span style="margin-left:1.5rem;color:#888;">&#x1F4AC; {{ post.comments.count }} comments</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            {% empty %}
-                <li>No posts yet.</li>
-            {% endfor %}
-        </ul>
+
+        {% for post in posts %}
+        {% include "_post_item.html" %}
+        {% empty %}
+        <li>No posts yet.</li>
+        {% endfor %}
+        </li>
         {% endblock %}
     </div>
 </body>
-</html>
 
+</html>

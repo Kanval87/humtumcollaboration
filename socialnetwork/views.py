@@ -57,7 +57,7 @@ def home(request):
     return render(request, "home.html", {"form": form, "posts": posts})
 
 
-@login_required
+# @login_required
 def profile_view(request, username):
     user = User.objects.get(username=username)
     profile = user.profile
